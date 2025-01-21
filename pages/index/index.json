@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "assets": "./components/assets/index",
+    "income": "./components/income/index",
+    "expenditure": "./components/expenditure/index",
+    "liability": "./components/liability/index",
+    "trend": "./components/trend/index"
+  }
+}

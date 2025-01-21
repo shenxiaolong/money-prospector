@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/payment-plan/index"
+  ],
+  "useExtendedLib": {
+    "weui": true
+  },
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "钱途规划师",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

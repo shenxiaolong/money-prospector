@@ -1,0 +1,103 @@
+<view class="assets-container">
+  <!-- 总资产展示 -->
+  <view class="total-assets">
+    <text class="label">总资产</text>
+    <text class="amount">¥ {{totalAssets}}</text>
+  </view>
+
+  <!-- 资产列表 -->
+  <view class="assets-list">
+    <!-- 添加空状态展示 -->
+    <view class="empty-state" wx:if="{{!assetsList.length}}">
+      <image class="empty-image" src="/images/empty-assets.png" mode="aspectFit"></image>
+      <view class="empty-text">还没有资产记录</view>
+      <view class="empty-tip">点击下方按钮添加资产</view>
+    </view>
+
+    <view class="asset-item" wx:for="{{assetsList}}" wx:key="id">
+      <view class="asset-info">
+        <view class="asset-name">{{item.name}}</view>
+        <view class="asset-type">{{item.typeName}}</view>
+        <view class="asset-amount">¥ {{item.amount}}</view>
+      </view>
+      <view class="asset-remark" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
+      <view class="action-buttons">
+        <view class="edit-btn" bindtap="showEditForm" data-id="{{item.id}}">编辑</view>
+        <view class="delete-btn" bindtap="showDeleteConfirm" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加资产按钮 -->
+  <view class="add-btn" bindtap="showAddAssetForm" wx:if="{{!showAddForm}}">
+    <text>添加资产</text>
+  </view>
+
+  <!-- 添加遮罩层 -->
+  <view class="form-mask {{showAddForm ? 'show' : ''}}" bindtap="hideAddAssetForm"></view>
+
+  <!-- 添加/编辑表单 -->
+  <view class="add-form {{showAddForm ? 'show' : ''}}" id="addForm">
+    <view class="form-title">
+      <view class="form-title-text">{{isEditing ? '编辑资产' : '添加资产'}}</view>
+    </view>
+
+    <view class="form-content">
+      <view class="form-item">
+        <text class="label">资产名称</text>
+        <input class="input" 
+               placeholder="请输入资产名称" 
+               value="{{newAsset.name}}"
+               data-field="name"
+               bindinput="handleInput"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label">资产金额</text>
+        <input class="input" 
+               type="digit"
+               placeholder="请输入金额" 
+               value="{{newAsset.amount}}"
+               data-field="amount"
+               bindinput="handleInput"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label">资产类型</text>
+        <picker bindchange="handleTypeChange" 
+                value="{{newAsset.type}}" 
+                range="{{assetTypes}}">
+          <view class="picker">{{assetTypes[newAsset.type]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">备注</text>
+        <input class="input" 
+               placeholder="请输入备注（选填）" 
+               value="{{newAsset.remark}}"
+               data-field="remark"
+               bindinput="handleInput"/>
+      </view>
+    </view>
+
+    <view class="form-buttons">
+      <view class="form-buttons-content">
+        <button class="cancel-btn" bindtap="hideAddAssetForm">取消</button>
+        <button class="confirm-btn" bindtap="addAsset">确认</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 删除确认弹框 -->
+  <view class="modal-mask" wx:if="{{showDeleteModal}}">
+    <view class="modal-content">
+      <view class="modal-title">确认删除</view>
+      <view class="modal-message">确定要删除这项资产吗？</view>
+      <view class="modal-buttons">
+        <button class="cancel-btn" bindtap="cancelDelete">取消</button>
+        <button class="confirm-btn" bindtap="confirmDelete">确认</button>
+      </view>
+    </view>
+  </view>
+</view>

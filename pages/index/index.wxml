@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="content">
+    <!-- 根据当前选中的tab显示对应内容 -->
+    <assets wx:if="{{currentTab === 0}}"></assets>
+    <income wx:if="{{currentTab === 1}}"></income>
+    <expenditure wx:if="{{currentTab === 2}}"></expenditure>
+    <liability wx:if="{{currentTab === 3}}"></liability>
+    <trend wx:if="{{currentTab === 4}}"></trend>
+  </view>
+
+  <!-- 底部导航栏 -->
+  <view class="tab-bar">
+    <view class="tab-line" style="left: {{tabLineLeft}}"></view>
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-index="0">
+      <text>资产</text>
+    </view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1">
+      <text>收入</text>
+    </view>
+    <view class="tab-item {{currentTab === 2 ? 'active' : ''}}" bindtap="switchTab" data-index="2">
+      <text>支出</text>
+    </view>
+    <view class="tab-item {{currentTab === 3 ? 'active' : ''}}" bindtap="switchTab" data-index="3">
+      <text>负债</text>
+    </view>
+    <view class="tab-item {{currentTab === 4 ? 'active' : ''}}" bindtap="switchTab" data-index="4">
+      <text>趋势</text>
+    </view>
+  </view>
+</view>

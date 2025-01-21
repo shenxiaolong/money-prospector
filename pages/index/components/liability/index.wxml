@@ -1,0 +1,148 @@
+<view class="loan-container">
+  <!-- 贷款列表 -->
+  <view class="loan-list">
+    <!-- 空状态展示 -->
+    <view class="empty-state" wx:if="{{!loanList.length}}">
+      <image class="empty-image" src="/images/empty-loan.png" mode="aspectFit"></image>
+      <view class="empty-text">还没有贷款记录</view>
+      <view class="empty-tip">点击下方按钮添加贷款</view>
+    </view>
+
+    <view class="loan-item" wx:for="{{loanList}}" wx:key="id">
+      <view class="loan-info">
+        <view class="loan-name">{{item.name}}</view>
+        <view class="loan-type">{{item.typeName}}</view>
+        <view class="loan-amount">¥ {{item.amount}}</view>
+      </view>
+      <view class="loan-period" wx:if="{{item.loanType === 1 || item.loanType === 2}}">
+        <text>{{item.loanTypeName}}</text>
+        <text>{{item.endDate}}</text>
+        <text class="loan-status {{item.isPaid ? 'paid' : 'unpaid'}}">{{item.isPaid ? '本月已还款' : '本月未还款'}}</text>
+      </view>
+      <view class="loan-period" wx:else>
+        <text>{{item.loanTypeName}}</text>
+      </view>
+      <view class="loan-remark" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
+      <view class="action-buttons">
+        <view class="plan-btn" 
+              bindtap="showPaymentPlan" 
+              data-id="{{item.id}}" 
+              wx:if="{{item.loanType === 1 || item.loanType === 2}}">查看还款计划</view>
+        <view class="edit-btn" bindtap="showEditForm" data-id="{{item.id}}">编辑</view>
+        <view class="delete-btn" bindtap="showDeleteConfirm" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加贷款按钮 -->
+  <view class="add-btn" bindtap="showAddLoanForm" wx:if="{{!showAddForm}}">
+    <text>添加贷款</text>
+  </view>
+
+  <!-- 添加遮罩层 -->
+  <view class="form-mask {{showAddForm ? 'show' : ''}}" bindtap="hideAddLoanForm"></view>
+
+  <!-- 添加/编辑表单 -->
+  <view class="add-form {{showAddForm ? 'show' : ''}}" id="addForm">
+    <view class="form-title">
+      <view class="form-title-text">{{isEditing ? '编辑贷款' : '添加贷款'}}</view>
+    </view>
+    
+    <view class="form-content">
+      <view class="form-item">
+        <text class="label">贷款名称</text>
+        <input class="input" 
+               placeholder="请输入贷款名称" 
+               value="{{newLoan.name}}"
+               data-field="name"
+               bindinput="handleInput"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label">贷款类型</text>
+        <picker bindchange="handleTypeChange" 
+                value="{{newLoan.type}}" 
+                range="{{loanTypes}}">
+          <view class="picker">{{loanTypes[newLoan.type]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">贷款方式</text>
+        <picker bindchange="handleLoanTypeChange" 
+                value="{{newLoan.loanType}}" 
+                range="{{loanTypeOptions}}">
+          <view class="picker">{{loanTypeOptions[newLoan.loanType]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">贷款金额</text>
+        <input class="input" 
+               type="digit"
+               placeholder="请输入金额" 
+               value="{{newLoan.amount}}"
+               data-field="amount"
+               bindinput="handleInput"/>
+      </view>
+
+      <!-- 等额本息和等额本金需要的字段 -->
+      <block wx:if="{{newLoan.loanType === 1 || newLoan.loanType === 2}}">
+        <view class="form-item">
+          <text class="label">年利率(%)</text>
+          <input class="input" 
+                 type="digit"
+                 placeholder="请输入年利率" 
+                 value="{{newLoan.rate}}"
+                 data-field="rate"
+                 bindinput="handleInput"/>
+        </view>
+
+        <view class="form-item">
+          <text class="label">结束还款日期</text>
+          <picker mode="date" 
+                  fields="month"
+                  value="{{newLoan.endDate}}"
+                  bindchange="handleEndDateChange">
+            <view class="picker">{{newLoan.endDate || '请选择结束月份'}}</view>
+          </picker>
+        </view>
+
+        <view class="form-item">
+          <text class="label">当月是否已还款</text>
+          <switch checked="{{newLoan.isPaid}}" 
+                  bindchange="handleIsPaidChange" 
+                  color="#07c160"/>
+        </view>
+      </block>
+
+      <view class="form-item">
+        <text class="label">备注</text>
+        <input class="input" 
+               placeholder="请输入备注（选填）" 
+               value="{{newLoan.remark}}"
+               data-field="remark"
+               bindinput="handleInput"/>
+      </view>
+    </view>
+
+    <view class="form-buttons">
+      <view class="form-buttons-content">
+        <button class="cancel-btn" bindtap="hideAddLoanForm">取消</button>
+        <button class="confirm-btn" bindtap="addLoan">确认</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 删除确认弹框 -->
+  <view class="modal-mask" wx:if="{{showDeleteModal}}">
+    <view class="modal-content">
+      <view class="modal-title">确认删除</view>
+      <view class="modal-message">确定要删除这条贷款记录吗？</view>
+      <view class="modal-buttons">
+        <button class="cancel-btn" bindtap="cancelDelete">取消</button>
+        <button class="confirm-btn" bindtap="confirmDelete">确认</button>
+      </view>
+    </view>
+  </view>
+</view>

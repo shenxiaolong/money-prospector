@@ -1,0 +1,149 @@
+<view class="trend-container">
+  <!-- 趋势概览 -->
+  <view class="trend-overview">
+    <view class="overview-item">
+      <view class="label-with-tip">
+        <text class="label">当前资金</text>
+        <view class="tip-icon" bindtap="showCurrentFundsExplanation">?</view>
+      </view>
+      <text class="amount" bindtap="showCurrentFundsDetail">¥{{startAmount}}</text>
+    </view>
+    <view class="overview-item">
+      <view class="label-with-tip">
+        <text class="label">月平均收益</text>
+        <view class="tip-icon" bindtap="showIncomeExplanation">?</view>
+      </view>
+      <text class="amount income" bindtap="showMonthlyIncomeDetail">¥{{monthlyIncome}}</text>
+    </view>
+    <view class="overview-item">
+      <view class="label-with-tip">
+        <text class="label">月平均支出</text>
+        <view class="tip-icon" bindtap="showExpenditureExplanation">?</view>
+      </view>
+      <text class="amount expenditure" bindtap="showMonthlyExpenditureDetail">¥{{monthlyExpenditure}}</text>
+    </view>
+  </view>
+
+  <!-- 时间选择轴 -->
+  <view class="time-slider">
+    <view class="slider-header">
+      <text class="slider-title">预测时间</text>
+      <text class="slider-value">{{selectedYears}}年</text>
+    </view>
+    <slider 
+      min="1" 
+      max="30" 
+      value="{{selectedYears}}" 
+      block-size="24" 
+      activeColor="#07c160"
+      backgroundColor="#e8e8e8"
+      bindchange="handleYearChange"
+      bindchanging="handleYearChanging"
+    />
+  </view>
+
+  <!-- 列设置 -->
+  <view class="column-settings">
+    <view class="settings-content">
+      <view class="setting-item {{columnSettings.income ? 'active' : ''}}" 
+            bindtap="toggleColumn" data-column="income">收入</view>
+      <view class="setting-item {{columnSettings.expense ? 'active' : ''}}" 
+            bindtap="toggleColumn" data-column="expense">支出</view>
+      <view class="setting-item {{columnSettings.loan ? 'active' : ''}}" 
+            bindtap="toggleColumn" data-column="loan">还贷</view>
+      <view class="setting-item {{columnSettings.balance ? 'active' : ''}}" 
+            bindtap="toggleColumn" data-column="balance">结余</view>
+      <view class="setting-item {{columnSettings.assets ? 'active' : ''}}" 
+            bindtap="toggleColumn" data-column="assets">总资产</view>
+      <view class="setting-item {{columnSettings.remainingLoan ? 'active' : ''}}" 
+            bindtap="toggleColumn" data-column="remainingLoan">剩余贷款</view>
+    </view>
+  </view>
+
+  <!-- 月度明细表格 -->
+  <view class="table-container">
+    <!-- 表头 -->
+    <view class="table-header">
+      <view class="th">
+        <text>时间</text>
+      </view>
+      <view class="th" wx:if="{{columnSettings.income}}">
+        <view class="th-with-tip">
+          <text>收入</text>
+          <view class="tip-icon" bindtap="showTableIncomeExplanation">?</view>
+        </view>
+      </view>
+      <view class="th" wx:if="{{columnSettings.expense}}">
+        <view class="th-with-tip">
+          <text>支出</text>
+          <view class="tip-icon" bindtap="showTableExpenseExplanation">?</view>
+        </view>
+      </view>
+      <view class="th" wx:if="{{columnSettings.loan}}">
+        <view class="th-with-tip">
+          <text>还贷</text>
+          <view class="tip-icon" bindtap="showTableLoanExplanation">?</view>
+        </view>
+      </view>
+      <view class="th" wx:if="{{columnSettings.balance}}">
+        <view class="th-with-tip">
+          <text>结余</text>
+          <view class="tip-icon" bindtap="showTableBalanceExplanation">?</view>
+        </view>
+      </view>
+      <view class="th" wx:if="{{columnSettings.assets}}">
+        <view class="th-with-tip">
+          <text>总资产</text>
+          <view class="tip-icon" bindtap="showTableAssetsExplanation">?</view>
+        </view>
+      </view>
+      <view class="th" wx:if="{{columnSettings.remainingLoan}}">
+        <view class="th-with-tip">
+          <text>剩余贷款</text>
+          <view class="tip-icon" bindtap="showTableRemainingLoanExplanation">?</view>
+        </view>
+      </view>
+    </view>
+    <!-- 表格内容 -->
+    <view class="table-body">
+      <view class="tr" wx:for="{{monthlyTrend}}" wx:key="month">
+        <view class="td">{{item.month}}</view>
+        <view class="td income" wx:if="{{columnSettings.income}}" 
+              bindtap="showIncomeDetail" data-month="{{item.month}}" data-amount="{{item.expectedIncome}}">
+          {{item.expectedIncome}}
+        </view>
+        <view class="td expenditure" wx:if="{{columnSettings.expense}}" 
+              bindtap="showExpenseDetail" data-month="{{item.month}}" data-amount="{{item.expectedExpense}}">
+          {{item.expectedExpense}}
+        </view>
+        <view class="td loan" wx:if="{{columnSettings.loan}}" 
+              bindtap="showLoanDetail" data-month="{{item.month}}" data-amount="{{item.monthlyLoan}}">
+          {{item.monthlyLoan}}
+        </view>
+        <view class="td amount {{item.monthlyBalance >= 0 ? 'income' : 'expenditure'}}"
+              wx:if="{{columnSettings.balance}}"
+              bindtap="showBalanceDetail" 
+              data-month="{{item.month}}" 
+              data-income="{{item.expectedIncome}}"
+              data-expense="{{item.expectedExpense}}"
+              data-loan="{{item.monthlyLoan}}"
+              data-balance="{{item.monthlyBalance}}">
+          {{item.monthlyBalance}}
+        </view>
+        <view class="td amount" wx:if="{{columnSettings.assets}}"
+              bindtap="showAssetsDetail" 
+              data-month="{{item.month}}" 
+              data-amount="{{item.totalAssets}}"
+              data-balance="{{item.monthlyBalance}}">
+          {{item.totalAssets}}
+        </view>
+        <view class="td loan" wx:if="{{columnSettings.remainingLoan}}"
+              bindtap="showRemainingLoanDetail" 
+              data-month="{{item.month}}" 
+              data-amount="{{item.remainingLoan}}">
+          {{item.remainingLoan}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view> 

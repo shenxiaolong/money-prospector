@@ -1,0 +1,139 @@
+<view class="expenditure-container">
+  <!-- 支出列表 -->
+  <view class="expenditure-list">
+    <!-- 空状态展示 -->
+    <view class="empty-state" wx:if="{{!expenditureList.length}}">
+      <image class="empty-image" src="/images/empty-expenditure.png" mode="aspectFit"></image>
+      <view class="empty-text">还没有支出记录</view>
+      <view class="empty-tip">点击下方按钮添加支出</view>
+    </view>
+
+    <view class="expenditure-item" wx:for="{{expenditureList}}" wx:key="id">
+      <view class="expenditure-info">
+        <view class="expenditure-name">{{item.name}}</view>
+        <view class="expenditure-type">{{item.typeName}}</view>
+        <view class="expenditure-amount">¥ {{item.amount}}</view>
+      </view>
+      <view class="expenditure-period">
+        <text>{{item.expenditureTypeName}}</text>
+        <text wx:if="{{item.expenditureTypeName === '一次性支出'}}">{{item.date}}</text>
+        <text wx:else>{{item.periodName}}</text>
+      </view>
+      <view class="expenditure-remark" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
+      <view class="action-buttons">
+        <view class="edit-btn" bindtap="showEditForm" data-id="{{item.id}}">编辑</view>
+        <view class="delete-btn" bindtap="showDeleteConfirm" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加支出按钮 -->
+  <view class="add-btn" bindtap="showAddExpenditureForm" wx:if="{{!showAddForm}}">
+    <text>添加支出</text>
+  </view>
+
+  <!-- 添加遮罩层 -->
+  <view class="form-mask {{showAddForm ? 'show' : ''}}" bindtap="hideAddExpenditureForm"></view>
+
+  <!-- 添加/编辑表单 -->
+  <view class="add-form {{showAddForm ? 'show' : ''}}" id="addForm">
+    <view class="form-title">
+      <view class="form-title-text">{{isEditing ? '编辑支出' : '添加支出'}}</view>
+    </view>
+    
+    <view class="form-content">
+      <view class="form-item">
+        <text class="label">支出名称</text>
+        <input class="input" 
+               placeholder="请输入支出名称" 
+               value="{{newExpenditure.name}}"
+               data-field="name"
+               bindinput="handleInput"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label">支出金额</text>
+        <input class="input" 
+               type="digit"
+               placeholder="请输入金额" 
+               value="{{newExpenditure.amount}}"
+               data-field="amount"
+               bindinput="handleInput"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label">支出类型</text>
+        <picker bindchange="handleTypeChange" 
+                value="{{newExpenditure.type}}" 
+                range="{{expenditureTypes}}">
+          <view class="picker">{{expenditureTypes[newExpenditure.type]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">支出方式</text>
+        <picker bindchange="handleExpenditureTypeChange" 
+                value="{{newExpenditure.expenditureType}}" 
+                range="{{expenditureTypeOptions}}">
+          <view class="picker">{{expenditureTypeOptions[newExpenditure.expenditureType]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item" wx:if="{{newExpenditure.expenditureType === 0}}">
+        <text class="label">支出日期</text>
+        <picker mode="date" 
+                fields="month"
+                value="{{newExpenditure.date}}"
+                bindchange="handleDateChange">
+          <view class="picker">{{newExpenditure.date || '请选择月份'}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item" wx:if="{{newExpenditure.expenditureType === 1}}">
+        <text class="label">支出周期</text>
+        <picker bindchange="handlePeriodChange" 
+                value="{{newExpenditure.period}}" 
+                range="{{periodOptions}}">
+          <view class="picker">{{periodOptions[newExpenditure.period]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item" wx:if="{{newExpenditure.expenditureType === 1 && newExpenditure.period === 1}}">
+        <text class="label">支出月份</text>
+        <picker bindchange="handleMonthChange" 
+                value="{{newExpenditure.month}}" 
+                range="{{monthOptions}}">
+          <view class="picker">{{monthOptions[newExpenditure.month]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">备注</text>
+        <input class="input" 
+               placeholder="请输入备注（选填）" 
+               value="{{newExpenditure.remark}}"
+               data-field="remark"
+               bindinput="handleInput"/>
+      </view>
+    </view>
+
+    <view class="form-buttons">
+      <view class="form-buttons-content">
+        <button class="cancel-btn" bindtap="hideAddExpenditureForm">取消</button>
+        <button class="confirm-btn" bindtap="addExpenditure">确认</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 删除确认弹框 -->
+  <view class="modal-mask" wx:if="{{showDeleteModal}}">
+    <view class="modal-content">
+      <view class="modal-title">确认删除</view>
+      <view class="modal-message">确定要删除这条支出记录吗？</view>
+      <view class="modal-buttons">
+        <button class="cancel-btn" bindtap="cancelDelete">取消</button>
+        <button class="confirm-btn" bindtap="confirmDelete">确认</button>
+      </view>
+    </view>
+  </view>
+</view> 

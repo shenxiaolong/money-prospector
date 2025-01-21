@@ -1,0 +1,364 @@
+/* component.wxss */
+.loan-container {
+  padding: 0 20rpx;
+}
+
+.loan-list {
+  padding-bottom: 120rpx;
+  margin-top: 0;
+}
+
+.loan-item {
+  background: #fff;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 12rpx;
+  position: relative;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.loan-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loan-name {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.loan-type {
+  font-size: 24rpx;
+  color: #666;
+  background: #f5f5f5;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.loan-amount {
+  font-size: 32rpx;
+  color: #ff4d4f;
+  font-weight: 500;
+}
+
+.loan-period {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 10rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  white-space: nowrap;
+}
+
+.loan-period text {
+  white-space: nowrap;
+}
+
+.loan-period text:first-child {
+  background: #f5f5f5;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+  line-height: 1.4;
+}
+
+.loan-remark {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.plan-btn {
+  color: #1890ff;
+  font-size: 24rpx;
+}
+
+.edit-btn {
+  color: #07c160;
+  font-size: 24rpx;
+}
+
+.delete-btn {
+  color: #ff4d4f;
+  font-size: 24rpx;
+}
+
+.add-btn {
+  position: fixed;
+  bottom: calc(100rpx + env(safe-area-inset-bottom) + 20rpx);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #07c160;
+  color: #fff;
+  padding: 20rpx 60rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(7, 193, 96, 0.3);
+  z-index: 99;
+}
+
+.add-form {
+  background: #fff;
+  padding: 0;
+  border-radius: 12rpx 12rpx 0 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 900;
+  max-height: 80vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.add-form::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.add-form.show {
+  transform: translateY(0);
+}
+
+.form-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 901;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 0;
+}
+
+.form-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -20rpx;
+  height: 20rpx;
+  background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.form-title-text {
+  padding: 20rpx 0;
+  position: relative;
+  z-index: 1;
+}
+
+.form-content {
+  padding: 30rpx;
+  margin: 30rpx 0;
+  position: relative;
+  z-index: 900;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-item .label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.form-item .input {
+  border: 2rpx solid #e8e8e8;
+  padding: 16rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.form-item .picker {
+  border: 2rpx solid #e8e8e8;
+  padding: 16rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background: #fff;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 901;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.form-buttons::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20rpx;
+  height: 20rpx;
+  background: linear-gradient(to top, #fff, rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.form-buttons-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20rpx 30rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.form-buttons button {
+  width: 45%;
+  font-size: 32rpx;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.confirm-btn {
+  background: #07c160;
+  color: #fff;
+}
+
+/* 遮罩层样式 */
+.form-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 899;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.form-mask.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* 添加空状态样式 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+}
+
+.empty-image {
+  width: 240rpx;
+  height: 240rpx;
+  margin-bottom: 40rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.empty-tip {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 模态框样式 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  width: 80%;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 40rpx;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-message {
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button {
+  width: 45%;
+  font-size: 28rpx;
+  margin: 0;
+}
+
+.modal-buttons .cancel-btn {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.modal-buttons .confirm-btn {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.loan-status {
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+  line-height: 1.4;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.loan-status.paid {
+  background: #e8f5e9;
+  color: #07c160;
+}
+
+.loan-status.unpaid {
+  background: #fff3f3;
+  color: #ff4d4f;
+}

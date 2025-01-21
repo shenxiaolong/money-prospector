@@ -1,0 +1,140 @@
+<view class="income-container">
+  <!-- 收入列表 -->
+  <view class="income-list">
+    <!-- 添加空状态展示 -->
+    <view class="empty-state" wx:if="{{!incomeList.length}}">
+      <image class="empty-image" src="/images/empty-income.png" mode="aspectFit"></image>
+      <view class="empty-text">还没有收入记录</view>
+      <view class="empty-tip">点击下方按钮添加收入</view>
+    </view>
+
+    <view class="income-item" wx:for="{{incomeList}}" wx:key="id">
+      <view class="income-info">
+        <view class="income-name">{{item.name}}</view>
+        <view class="income-type">{{item.typeName}}</view>
+        <view class="income-amount">¥ {{item.amount}}</view>
+      </view>
+      <view class="income-period">
+        <text>{{item.incomeTypeName}}</text>
+        <text wx:if="{{item.incomeTypeName === '一次性收入'}}">{{item.date}}</text>
+        <text wx:else>{{item.periodName}}</text>
+      </view>
+      <view class="income-remark" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
+      <view class="action-buttons">
+        <view class="edit-btn" bindtap="showEditForm" data-id="{{item.id}}">编辑</view>
+        <view class="delete-btn" bindtap="showDeleteConfirm" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加收入按钮 -->
+  <view class="add-btn" bindtap="showAddIncomeForm" wx:if="{{!showAddForm}}">
+    <text>添加收入</text>
+  </view>
+
+  <!-- 添加遮罩层 -->
+  <view class="form-mask {{showAddForm ? 'show' : ''}}" bindtap="hideAddIncomeForm"></view>
+
+  <!-- 修改表单容器的类名 -->
+  <view class="add-form {{showAddForm ? 'show' : ''}}" id="addForm">
+    <view class="form-title">
+      <view class="form-title-text">{{isEditing ? '编辑收入' : '添加收入'}}</view>
+    </view>
+    
+    <view class="form-content">
+      <!-- 将所有表单项包裹在这个容器中 -->
+      <view class="form-item">
+        <text class="label">收入名称</text>
+        <input class="input" 
+               placeholder="请输入收入名称" 
+               value="{{newIncome.name}}"
+               data-field="name"
+               bindinput="handleInput"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label">收入金额</text>
+        <input class="input" 
+               type="digit"
+               placeholder="请输入金额" 
+               value="{{newIncome.amount}}"
+               data-field="amount"
+               bindinput="handleInput"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label">收入类型</text>
+        <picker bindchange="handleTypeChange" 
+                value="{{newIncome.type}}" 
+                range="{{incomeTypes}}">
+          <view class="picker">{{incomeTypes[newIncome.type]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">收入方式</text>
+        <picker bindchange="handleIncomeTypeChange" 
+                value="{{newIncome.incomeType}}" 
+                range="{{incomeTypeOptions}}">
+          <view class="picker">{{incomeTypeOptions[newIncome.incomeType]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item" wx:if="{{newIncome.incomeType === 0}}">
+        <text class="label">收入日期</text>
+        <picker mode="date" 
+                fields="month"
+                value="{{newIncome.date}}"
+                bindchange="handleDateChange">
+          <view class="picker">{{newIncome.date || '请选择月份'}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item" wx:if="{{newIncome.incomeType === 1}}">
+        <text class="label">收入周期</text>
+        <picker bindchange="handlePeriodChange" 
+                value="{{newIncome.period}}" 
+                range="{{periodOptions}}">
+          <view class="picker">{{periodOptions[newIncome.period]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item" wx:if="{{newIncome.incomeType === 1 && newIncome.period === 1}}">
+        <text class="label">收入月份</text>
+        <picker bindchange="handleMonthChange" 
+                value="{{newIncome.month}}" 
+                range="{{monthOptions}}">
+          <view class="picker">{{monthOptions[newIncome.month]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">备注</text>
+        <input class="input" 
+               placeholder="请输入备注（选填）" 
+               value="{{newIncome.remark}}"
+               data-field="remark"
+               bindinput="handleInput"/>
+      </view>
+    </view>
+
+    <view class="form-buttons">
+      <view class="form-buttons-content">
+        <button class="cancel-btn" bindtap="hideAddIncomeForm">取消</button>
+        <button class="confirm-btn" bindtap="addIncome">确认</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 删除确认弹框 -->
+  <view class="modal-mask" wx:if="{{showDeleteModal}}">
+    <view class="modal-content">
+      <view class="modal-title">确认删除</view>
+      <view class="modal-message">确定要删除这条收入记录吗？</view>
+      <view class="modal-buttons">
+        <button class="cancel-btn" bindtap="cancelDelete">取消</button>
+        <button class="confirm-btn" bindtap="confirmDelete">确认</button>
+      </view>
+    </view>
+  </view>
+</view> 

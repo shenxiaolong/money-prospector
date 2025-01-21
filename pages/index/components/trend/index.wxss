@@ -1,0 +1,215 @@
+.trend-container {
+  padding: 0 20rpx;
+  height: calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top) - 44px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 趋势概览样式 */
+.trend-overview {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.overview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.overview-item .label {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 6rpx;
+  position: relative;
+  padding-right: 30rpx;
+}
+
+.overview-item .amount {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.amount.income {
+  color: #07c160;
+}
+
+.amount.expenditure {
+  color: #ff4d4f;
+}
+
+/* 时间选择轴样式 */
+.time-slider {
+  background: #fff;
+  padding: 16rpx 20rpx;
+  border-radius: 12rpx;
+  margin-bottom: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.slider-title {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.slider-value {
+  font-size: 26rpx;
+  color: #07c160;
+  font-weight: 500;
+}
+
+/* 表格样式 */
+.table-container {
+  background: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-header {
+  display: flex;
+  background: #f5f5f5;
+  font-weight: 500;
+}
+
+.table-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.tr {
+  height: 64rpx;
+  min-height: 64rpx;
+  display: flex;
+  align-items: center;
+}
+
+.th, .td {
+  flex: 1;
+  padding: 0 10rpx;
+  text-align: center;
+  font-size: 26rpx;
+}
+
+.th {
+  color: #333;
+}
+
+.td {
+  color: #666;
+}
+
+.td.income {
+  color: #07c160;
+}
+
+.td.expenditure {
+  color: #ff4d4f;
+}
+
+.td.loan {
+  color: #ff4d4f;
+}
+
+.td.amount.expenditure {
+  color: #ff4d4f;  /* 保持负数为红色 */
+}
+
+.td.amount.income {
+  color: #07c160;  /* 正数为绿色 */
+}
+
+/* 总资产保持默认颜色 */
+.td.amount {
+  font-weight: 500;
+}
+
+.label-with-tip {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.tip-icon {
+  width: 28rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  text-align: center;
+  border-radius: 50%;
+  background: #f0f0f0;
+  color: #999;
+  font-size: 20rpx;
+  cursor: pointer;
+  position: absolute;
+  top: -3rpx;
+  right: -2rpx;
+}
+
+.th-with-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-right: 24rpx;
+}
+
+.th .tip-icon {
+  width: 24rpx;
+  height: 24rpx;
+  line-height: 24rpx;
+  font-size: 18rpx;
+  top: -2rpx;
+  right: -4rpx;
+}
+
+.column-settings {
+  background: #fff;
+  padding: 16rpx 20rpx;
+  border-radius: 12rpx;
+  margin-bottom: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.settings-title {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 12rpx;
+}
+
+.settings-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.setting-item {
+  font-size: 24rpx;
+  color: #666;
+  background: #f5f5f5;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  cursor: pointer;
+}
+
+.setting-item.active {
+  color: #07c160;
+  background: rgba(7, 193, 96, 0.1);
+} 
