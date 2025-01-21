@@ -6,6 +6,7 @@
     <expenditure wx:if="{{currentTab === 2}}"></expenditure>
     <liability wx:if="{{currentTab === 3}}"></liability>
     <trend wx:if="{{currentTab === 4}}"></trend>
+    <about wx:if="{{currentTab === 5}}"></about>
   </view>
 
   <!-- 底部导航栏 -->
@@ -25,6 +26,9 @@
     </view>
     <view class="tab-item {{currentTab === 4 ? 'active' : ''}}" bindtap="switchTab" data-index="4">
       <text>趋势</text>
+    </view>
+    <view class="tab-item {{currentTab === 5 ? 'active' : ''}}" bindtap="switchTab" data-index="5">
+      <text>关于</text>
     </view>
   </view>
 </view>

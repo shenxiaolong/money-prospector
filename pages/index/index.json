@@ -4,6 +4,7 @@
     "income": "./components/income/index",
     "expenditure": "./components/expenditure/index",
     "liability": "./components/liability/index",
-    "trend": "./components/trend/index"
+    "trend": "./components/trend/index",
+    "about": "./components/about/index"
   }
 }

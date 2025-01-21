@@ -10,7 +10,11 @@
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "钱途规划师",
-    "navigationBarBackgroundColor": "#ffffff"
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "light",
+    "enableShareAppMessage": true,
+    "enableShareTimeline": true
   },
   "style": "v2",
   "componentFramework": "glass-easel",

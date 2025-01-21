@@ -1,0 +1,35 @@
+<view class="about-container">
+  <!-- 简介部分 -->
+  <view class="intro-section">
+    <view class="header">
+      <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+      <view class="title">{{introduction.title}}</view>
+    </view>
+    <view class="desc">{{introduction.desc}}</view>
+    <view class="privacy">{{introduction.privacy}}</view>
+  </view>
+
+  <!-- 打赏部分 -->
+  <!-- <view class="reward-section">
+    <view class="section-title">支持开发者</view>
+    <view class="reward-desc">如果这个小程序对您有帮助，欢迎打赏支持~</view>
+    <image 
+      class="reward-qrcode" 
+      src="/images/reward-qrcode.jpg" 
+      mode="aspectFit"
+      bindtap="previewQrCode"
+    ></image>
+  </view> -->
+
+  <!-- 联系方式 -->
+  <view class="info-block contact-block" bindtap="copyWechat">
+    <text class="info-label">联系我</text>
+    <view class="arrow"></view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="info-block">
+    <text class="info-label">版本</text>
+    <text class="info-value">{{version}}</text>
+  </view>
+</view> 
